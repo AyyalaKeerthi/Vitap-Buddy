@@ -1,0 +1,211 @@
+[
+  {
+    "id": "vtop-login",
+    "title": "VTOP student portal",
+    "category": "Academics",
+    "tags": ["vtop", "portal", "login", "password", "timetable", "marks", "attendance"],
+    "text": "VTOP is the student portal. You use it to see your timetable, attendance, marks, fee receipts and to register for courses. Log in with your registration number and the password you received at admission. If login fails, reset the password from the portal's reset link or visit the IT helpdesk with your ID card.",
+    "source": "Freshers handbook (sample)",
+    "verified": false
+  },
+  {
+    "id": "ffcs",
+    "title": "FFCS course registration",
+    "category": "Academics",
+    "tags": ["ffcs", "course", "registration", "faculty", "slot", "timetable", "credits"],
+    "text": "FFCS (Fully Flexible Credit System) lets you pick your own courses, faculty and slots each semester. Registration opens at a fixed time on VTOP and seats fill fast, so log in a few minutes early on a stable connection. Keep a backup list of slots and faculty in case your first choice fills up. Check the clash rules before you finalise.",
+    "source": "Academic regulations (sample)",
+    "verified": false
+  },
+  {
+    "id": "attendance",
+    "title": "Attendance requirement",
+    "category": "Academics",
+    "tags": ["attendance", "75", "shortage", "debarred", "medical", "leave"],
+    "text": "A minimum attendance percentage is required in each course to be allowed to write the final exam. Low attendance can lead to being debarred from that course's exam. Track your attendance on VTOP every week instead of waiting for the end of the semester. Medical or official leave needs documents submitted through the proper office, so apply as soon as you return.",
+    "source": "Academic regulations (sample)",
+    "verified": false
+  },
+  {
+    "id": "exams",
+    "title": "Exam pattern: CAT, FAT and digital assignments",
+    "category": "Academics",
+    "tags": ["exam", "cat", "fat", "assignment", "marks", "grade", "gpa", "cgpa", "test"],
+    "text": "Each course is assessed through Continuous Assessment Tests (CAT-1 and CAT-2), digital assignments or quizzes, and a Final Assessment Test (FAT) at the end of the semester. Grades come from the combined marks. Exam dates are published in the academic calendar and on VTOP.",
+    "source": "Academic regulations (sample)",
+    "verified": false
+  },
+  {
+    "id": "academic-calendar",
+    "title": "Academic calendar and semesters",
+    "category": "Academics",
+    "tags": ["calendar", "semester", "holiday", "vacation", "dates", "fall", "winter", "schedule"],
+    "text": "The year is split into semesters, usually called Fall and Winter. The academic calendar lists the start date, exam weeks, holidays and vacations. It is published on the university website and VTOP. Always plan travel after checking the exam schedule, not before.",
+    "source": "University website (sample)",
+    "verified": false
+  },
+  {
+    "id": "hostel-basics",
+    "title": "Hostel allotment and rooms",
+    "category": "Hostel",
+    "tags": ["hostel", "room", "allotment", "roommate", "bed", "cot", "warden", "block", "accommodation"],
+    "text": "Hostel rooms are allotted by the university based on the room category you chose at admission. Report to the hostel office with your admission documents and ID to get your room key. Rooms come with basic furniture. Raise maintenance problems with the warden or through the hostel complaint process.",
+    "source": "Hostel handbook (sample)",
+    "verified": false
+  },
+  {
+    "id": "hostel-boys",
+    "title": "Boys' hostel rules",
+    "category": "Hostel",
+    "tags": ["boys", "hostel", "curfew", "entry", "visitor", "rules", "outing", "night"],
+    "text": "Boys' hostels have fixed in-time and out-time rules and a log for outings. Visitors are not allowed inside rooms. Rules on late entry and weekend outings are set by the hostel office and can change, so read the notice board in your block.",
+    "source": "Hostel handbook (sample)",
+    "verified": false,
+    "audience": { "hostel": ["boys"] }
+  },
+  {
+    "id": "hostel-girls",
+    "title": "Girls' hostel rules",
+    "category": "Hostel",
+    "tags": ["girls", "hostel", "curfew", "entry", "visitor", "rules", "outing", "night", "permission"],
+    "text": "Girls' hostels have fixed in-time and out-time rules, and outings usually need a recorded permission. Visitors meet students only in the designated visitor area. Parents can be informed about outings. Check your block's notice board for the current timings.",
+    "source": "Hostel handbook (sample)",
+    "verified": false,
+    "audience": { "hostel": ["girls"] }
+  },
+  {
+    "id": "mess",
+    "title": "Mess and food options",
+    "category": "Food",
+    "tags": ["mess", "food", "canteen", "breakfast", "lunch", "dinner", "veg", "non-veg", "snacks", "eat", "night"],
+    "text": "Hostel students eat in the hostel mess, which serves breakfast, lunch, snacks and dinner on a weekly menu. Mess options are usually vegetarian and non-vegetarian, and you choose when you register. Food courts and canteens on campus are open for snacks and late meals. Share mess complaints with the mess committee, which has student members.",
+    "source": "Hostel handbook (sample)",
+    "verified": false
+  },
+  {
+    "id": "wifi",
+    "title": "Wi-Fi and internet",
+    "category": "Campus life",
+    "tags": ["wifi", "internet", "network", "login", "slow", "laptop", "device", "lan"],
+    "text": "Campus Wi-Fi covers academic blocks and hostels. You log in with your university credentials and the number of devices you can register is limited. Speeds drop at peak hours, such as during FFCS, so keep a mobile data connection as a backup. Report dead spots to the IT helpdesk.",
+    "source": "IT helpdesk (sample)",
+    "verified": false
+  },
+  {
+    "id": "transport",
+    "title": "Getting to and from campus",
+    "category": "Travel",
+    "tags": ["bus", "transport", "shuttle", "railway", "station", "airport", "vijayawada", "guntur", "amaravati", "travel", "cab", "auto", "reach", "city"],
+    "text": "The campus is in the Amaravati area of Andhra Pradesh. Vijayawada and Guntur are the nearest big cities and the usual points for trains and buses. The university runs buses on set routes for students. Pick up the current bus routes and timings from the transport office. Book station pickups through trusted cabs, and travel in groups on your first trip.",
+    "source": "Transport office (sample)",
+    "verified": false
+  },
+  {
+    "id": "medical",
+    "title": "Medical help on campus",
+    "category": "Health",
+    "tags": ["medical", "doctor", "health", "hospital", "sick", "fever", "ambulance", "emergency", "insurance", "medicine"],
+    "text": "There is a medical centre on campus for first aid and common illnesses. For serious cases the university can arrange transfer to a nearby hospital. Keep your ID card and any insurance details with you. Tell your warden if you are unwell and staying in your room.",
+    "source": "Freshers handbook (sample)",
+    "verified": false
+  },
+  {
+    "id": "ragging",
+    "title": "Anti-ragging and who to contact",
+    "category": "Safety",
+    "tags": ["ragging", "antiragging", "harassment", "bullying", "complaint", "helpline", "safe", "senior", "report"],
+    "text": "Ragging is banned by law and the university has an anti-ragging committee and squad. If a senior troubles you, report it to the warden, the anti-ragging committee or the national anti-ragging helpline. You can report anonymously. Reports are taken seriously, and you will not be penalised for reporting.",
+    "source": "Freshers handbook (sample)",
+    "verified": false
+  },
+  {
+    "id": "clubs",
+    "title": "Clubs and chapters",
+    "category": "Campus life",
+    "tags": ["club", "chapter", "activities", "coding", "technical", "cultural", "sports", "ieee", "join", "event", "fest", "hackathon", "extracurricular"],
+    "text": "Students run technical, cultural and sports clubs. Recruitment drives are usually in the first weeks of the semester, with a short interview or task. Join one or two clubs that match your interests rather than many. Clubs organise hackathons, workshops and the annual fests.",
+    "source": "Student affairs (sample)",
+    "verified": false
+  },
+  {
+    "id": "id-card",
+    "title": "ID card",
+    "category": "Admin",
+    "tags": ["id", "card", "identity", "lost", "duplicate", "entry", "library"],
+    "text": "Your ID card is used for entry, the library, hostel and exams. Carry it at all times. If you lose it, report it to the student welfare office and apply for a duplicate, which has a fee.",
+    "source": "Student welfare (sample)",
+    "verified": false
+  },
+  {
+    "id": "fees",
+    "title": "Fee payment",
+    "category": "Admin",
+    "tags": ["fee", "fees", "payment", "pay", "receipt", "late", "installment", "tuition", "hostel", "mess", "scholarship"],
+    "text": "Tuition, hostel and mess fees are paid through the portal or the bank method announced by the accounts office. Keep every receipt. Late fees can apply after the due date, so check VTOP for deadlines. For scholarships, contact the scholarship cell with your documents.",
+    "source": "Accounts office (sample)",
+    "verified": false
+  },
+  {
+    "id": "laundry",
+    "title": "Laundry",
+    "category": "Hostel",
+    "tags": ["laundry", "washing", "clothes", "iron", "dhobi", "machine"],
+    "text": "Hostels have a laundry service or washing machines. Label your clothes with your room number. Ask your warden how the service works in your block, including pickup days.",
+    "source": "Hostel handbook (sample)",
+    "verified": false
+  },
+  {
+    "id": "banking",
+    "title": "Banking, ATMs and cash",
+    "category": "Campus life",
+    "tags": ["bank", "atm", "cash", "upi", "money", "account", "deposit", "withdraw"],
+    "text": "There is an ATM on or near campus, and UPI works at most shops and food courts. Carry a little cash for places that do not accept UPI. Open a bank account in your own name before you arrive so parents can send money easily.",
+    "source": "Freshers handbook (sample)",
+    "verified": false
+  },
+  {
+    "id": "packing",
+    "title": "What to pack",
+    "category": "Before you arrive",
+    "tags": ["pack", "packing", "bring", "carry", "luggage", "bedding", "bucket", "lock", "extension", "documents", "essentials"],
+    "text": "Bring original and photocopied admission documents, passport photos, bedding, a lock, an extension board, toiletries, a water bottle and a laptop if you have one. Heavy items and extra clothes can be bought nearby later. Pack light, because hostel storage is small.",
+    "source": "Freshers handbook (sample)",
+    "verified": false
+  },
+  {
+    "id": "dress",
+    "title": "Dress code",
+    "category": "Campus life",
+    "tags": ["dress", "code", "uniform", "clothes", "formal", "lab", "wear", "shoes"],
+    "text": "The university has a dress code for classes and labs. Formal and decent clothing is expected in academic blocks, and some labs need closed shoes. Check the latest dress code notice at orientation.",
+    "source": "Student affairs (sample)",
+    "verified": false
+  },
+  {
+    "id": "library",
+    "title": "Library",
+    "category": "Campus life",
+    "tags": ["library", "books", "borrow", "issue", "study", "reading", "journal", "timing"],
+    "text": "The central library lets you borrow books with your ID card and has reading halls and digital resources. Timings are longer during exams. Fines apply for late returns.",
+    "source": "Library (sample)",
+    "verified": false
+  },
+  {
+    "id": "placements",
+    "title": "Placements and skill-building",
+    "category": "Career",
+    "tags": ["placement", "internship", "job", "company", "career", "coding", "skills", "resume", "campus", "recruit"],
+    "text": "Placement activity mainly happens in the later years, but skill-building starts now. Learn programming, join a club, build small projects and keep your grades steady. Seniors and the career development centre run resume and interview sessions.",
+    "source": "Career development centre (sample)",
+    "verified": false
+  },
+  {
+    "id": "phone-sim",
+    "title": "Mobile network and SIM",
+    "category": "Campus life",
+    "tags": ["sim", "mobile", "network", "signal", "phone", "airtel", "jio", "recharge", "coverage"],
+    "text": "Mobile coverage varies by operator inside the campus. Ask seniors in your hostel which operator works best in your block before buying a new SIM. Keep your phone number updated on VTOP for official messages.",
+    "source": "Freshers handbook (sample)",
+    "verified": false
+  }
+]

@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VIT-AP Buddy: ask a senior</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #12203A;
+    --ink-2: #1D3156;
+    --paper: #EEF2F7;
+    --card: #FFFFFF;
+    --hi: #FFD23F;
+    --teal: #0B7F6F;
+    --coral: #B8341A;
+    --line: #D3DBE6;
+    --mute: #566680;
+    --head: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body { margin: 0; font: 17px/1.55 var(--body); color: var(--ink); background: var(--paper); }
+  button, select, textarea { font: inherit; color: inherit; }
+  :focus-visible { outline: 3px solid var(--hi); outline-offset: 2px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  .shell { display: grid; grid-template-columns: 360px 1fr; min-height: 100%; }
+
+  /* ---------- side panel ---------- */
+  aside { background: var(--ink); color: #fff; padding: 28px 24px 40px; overflow-y: auto; max-height: 100vh; position: sticky; top: 0; }
+  .brand { font: 800 26px/1.1 var(--head); letter-spacing: -0.01em; margin: 0 0 4px; }
+  .brand span { background: var(--hi); color: var(--ink); padding: 0 8px; border-radius: 4px; }
+  .tag { margin: 0 0 26px; color: #B9C6DD; font-size: 15px; }
+  aside h2 { font: 600 16px/1.2 var(--head); margin: 28px 0 12px; color: #fff; }
+  .field { display: block; margin-bottom: 14px; }
+  .field > span { display: block; font-size: 14px; color: #B9C6DD; margin-bottom: 4px; }
+  select { width: 100%; background: var(--ink-2); border: 1px solid #3A4F7A; border-radius: 8px; padding: 9px 10px; }
+  .seg { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid #3A4F7A; border-radius: 8px; overflow: hidden; }
+  .seg label { text-align: center; padding: 8px 4px; cursor: pointer; background: var(--ink-2); border-right: 1px solid #3A4F7A; font-size: 15px; }
+  .seg label:last-child { border-right: 0; }
+  .seg input { position: absolute; opacity: 0; }
+  .seg input:checked + span { color: var(--ink); background: var(--hi); font-weight: 700; display: block; margin: -8px -4px; padding: 8px 4px; }
+  .seg input:focus-visible + span { outline: 3px solid #fff; outline-offset: -3px; }
+
+  .progress { height: 8px; background: var(--ink-2); border-radius: 99px; overflow: hidden; margin: 6px 0 4px; }
+  .progress i { display: block; height: 100%; width: 0; background: var(--hi); transition: width .3s ease; }
+  .progress-label { font-size: 14px; color: #B9C6DD; margin: 0 0 6px; }
+  .phase { margin: 18px 0 6px; font: 600 15px/1.2 var(--head); color: var(--hi); }
+  .task { display: grid; grid-template-columns: 22px 1fr; gap: 10px; padding: 8px 0; border-top: 1px solid #2A3E66; }
+  .task input { width: 20px; height: 20px; accent-color: var(--hi); margin: 2px 0 0; }
+  .task b { font-weight: 700; display: block; line-height: 1.3; }
+  .task small { display: block; color: #B9C6DD; font-size: 14px; line-height: 1.35; margin-top: 2px; }
+  .task.done b { text-decoration: line-through; color: #8FA2C4; }
+  .linkish { background: none; border: 0; padding: 0; margin-top: 4px; color: var(--hi); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; font-size: 14px; }
+
+  /* ---------- chat ---------- */
+  main { display: flex; flex-direction: column; min-width: 0; height: 100vh; }
+  #log { flex: 1; overflow-y: auto; padding: 36px clamp(16px, 5vw, 64px) 12px; scroll-behavior: smooth; }
+  .col { max-width: 760px; margin: 0 auto; }
+
+  .hero h1 { font: 800 clamp(34px, 5vw, 54px)/1.04 var(--head); letter-spacing: -0.02em; margin: 6vh 0 14px; max-width: 14ch; }
+  .hero p { color: var(--mute); max-width: 52ch; margin: 0 0 24px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip { background: var(--card); border: 1.5px solid var(--ink); border-radius: 99px; padding: 8px 16px; cursor: pointer; box-shadow: 3px 3px 0 var(--ink); transition: transform .08s, box-shadow .08s; }
+  .chip:hover { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
+
+  .me { margin: 22px 0 8px auto; width: fit-content; max-width: 85%; background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 16px 16px 4px 16px; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .slip { position: relative; margin: 10px 0 8px; background: var(--card); border: 1px solid var(--line); border-left: 8px solid var(--hi); border-radius: 4px 14px 14px 4px; padding: 16px 20px 14px; }
+  .slip.none { border-left-color: var(--coral); }
+  .slip p { margin: 0 0 10px; max-width: 68ch; }
+  .slip ul { margin: 0 0 10px; padding-left: 22px; }
+  .slip li { margin-bottom: 4px; }
+  .slip .meta { border-top: 1px dashed var(--line); margin-top: 12px; padding-top: 10px; font-size: 14px; color: var(--mute); }
+  .match { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .pips { display: inline-flex; gap: 3px; }
+  .pips i { width: 18px; height: 6px; border-radius: 3px; background: var(--line); }
+  .pips i.on { background: var(--teal); }
+  .pips.weak i.on { background: var(--coral); }
+  .srcs { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+  .badge { font-size: 13px; font-weight: 700; padding: 1px 8px; border-radius: 99px; border: 1.5px solid; margin-left: 6px; white-space: nowrap; }
+  .badge.ok { color: var(--teal); border-color: var(--teal); }
+  .badge.check { color: var(--coral); border-color: var(--coral); }
+  .fb { display: flex; gap: 8px; margin-top: 10px; align-items: center; }
+  .fb button { background: none; border: 1.5px solid var(--line); border-radius: 99px; padding: 3px 12px; cursor: pointer; font-size: 14px; }
+  .fb button:hover { border-color: var(--ink); }
+  .typing { color: var(--mute); margin: 14px 0; }
+
+  form { border-top: 1px solid var(--line); background: var(--paper); padding: 12px clamp(16px, 5vw, 64px) 18px; }
+  .composer { max-width: 760px; margin: 0 auto; display: flex; gap: 10px; align-items: flex-end; }
+  textarea { flex: 1; resize: none; max-height: 140px; background: #fff; border: 1.5px solid var(--ink); border-radius: 12px; padding: 11px 14px; }
+  .send { background: var(--hi); border: 1.5px solid var(--ink); border-radius: 12px; padding: 11px 20px; font-weight: 700; cursor: pointer; box-shadow: 3px 3px 0 var(--ink); }
+  .send:disabled { opacity: .5; cursor: wait; }
+  .foot { max-width: 760px; margin: 8px auto 0; font-size: 13px; color: var(--mute); }
+
+  @media (max-width: 880px) {
+    .shell { grid-template-columns: 1fr; }
+    aside { position: static; max-height: none; padding: 20px 18px; }
+    main { height: auto; min-height: 80vh; }
+    #log { overflow: visible; }
+    form { position: sticky; bottom: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside>
+    <p class="brand">VIT-AP <span>Buddy</span></p>
+    <p class="tag">Answers from campus notes, with the source shown.</p>
+
+    <h2>About you</h2>
+    <label class="field"><span>Where will you stay?</span>
+      <select id="hostel">
+        <option value="">Not sure yet</option>
+        <option value="boys">Boys' hostel</option>
+        <option value="girls">Girls' hostel</option>
+        <option value="dayscholar">Day scholar</option>
+      </select>
+    </label>
+    <label class="field"><span>Programme</span>
+      <select id="program">
+        <option value="">Not sure yet</option>
+        <option value="btech">B.Tech</option>
+        <option value="mtech">M.Tech</option>
+        <option value="other">Other</option>
+      </select>
+    </label>
+    <div class="field"><span id="lang-l">Reply in</span>
+      <div class="seg" role="radiogroup" aria-labelledby="lang-l">
+        <label><input type="radio" name="lang" value="en" checked><span>English</span></label>
+        <label><input type="radio" name="lang" value="te"><span>తెలుగు</span></label>
+        <label><input type="radio" name="lang" value="hi"><span>हिन्दी</span></label>
+      </div>
+    </div>
+
+    <h2>Your first month</h2>
+    <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="pbar"><i id="pfill"></i></div>
+    <p class="progress-label" id="plabel"></p>
+    <div id="road-body"></div>
+  </aside>
+
+  <main>
+    <div id="log" aria-live="polite">
+      <div class="col" id="thread">
+        <section class="hero" id="hero">
+          <h1>Ask the senior you wish you'd had on day one.</h1>
+          <p>Hostel, FFCS, mess, buses, clubs. Ask in English, Telugu or Hindi. When Buddy isn't sure, it says so and passes your question to the seniors who maintain these notes.</p>
+          <div class="chips" id="chips"></div>
+        </section>
+      </div>
+    </div>
+    <form id="form">
+      <div class="composer">
+        <label class="sr" for="q">Your question</label>
+        <textarea id="q" rows="1" maxlength="500" placeholder="Type your question, e.g. how do I reach campus from Vijayawada?"></textarea>
+        <button class="send" id="send" type="submit">Ask Buddy</button>
+      </div>
+      <p class="foot">Buddy answers only from the notes it has. Check anything marked "Needs check" with the office.</p>
+    </form>
+  </main>
+</div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const store = {
+  get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+};
+
+let profile = store.get("buddy.profile", { hostel: "", program: "" });
+let lang = store.get("buddy.lang", "en");
+let done = new Set(store.get("buddy.done", []));
+let history = [];
+let total = 0;
+let busy = false;
+
+const EXAMPLES = {
+  en: ["Where can I eat at night?", "How does FFCS registration work?", "What should I pack for the hostel?", "Who do I contact about ragging?"],
+  te: ["రాత్రి భోజనం ఎక్కడ దొరుకుతుంది?", "FFCS రిజిస్ట్రేషన్ ఎలా చేయాలి?", "హాస్టల్‌కి ఏమి తీసుకెళ్లాలి?"],
+  hi: ["रात में खाना कहाँ मिलेगा?", "FFCS रजिस्ट्रेशन कैसे होता है?", "हॉस्टल के लिए क्या पैक करूँ?"],
+};
+
+// ---------- profile + language ----------
+$("#hostel").value = profile.hostel || "";
+$("#program").value = profile.program || "";
+document.querySelector(`input[name=lang][value=${lang}]`).checked = true;
+$("#hostel").onchange = $("#program").onchange = () => {
+  profile = { hostel: $("#hostel").value, program: $("#program").value };
+  store.set("buddy.profile", profile);
+  loadRoadmap();
+};
+document.querySelectorAll("input[name=lang]").forEach((r) => (r.onchange = () => {
+  lang = r.value; store.set("buddy.lang", lang); renderChips();
+}));
+
+function renderChips() {
+  const box = $("#chips"); box.innerHTML = "";
+  for (const text of EXAMPLES[lang]) {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "chip"; b.textContent = text;
+    b.onclick = () => ask(text);
+    box.append(b);
+  }
+}
+
+// ---------- checklist ----------
+async function loadRoadmap() {
+  const qs = profile.hostel ? `?hostel=${profile.hostel}` : "";
+  const data = await (await fetch("/api/roadmap" + qs)).json();
+  const body = $("#road-body"); body.innerHTML = "";
+  total = 0;
+  for (const ph of data.phases) {
+    const h = document.createElement("div"); h.className = "phase"; h.textContent = ph.phase; body.append(h);
+    for (const t of ph.tasks) {
+      total++;
+      const row = document.createElement("div");
+      row.className = "task" + (done.has(t.id) ? " done" : "");
+      row.innerHTML = `<input type="checkbox" id="t-${t.id}" ${done.has(t.id) ? "checked" : ""}>
+        <div><label for="t-${t.id}"><b></b></label><small></small><button type="button" class="linkish">Ask Buddy about this</button></div>`;
+      row.querySelector("b").textContent = t.title;
+      row.querySelector("small").textContent = t.detail;
+      row.querySelector("input").onchange = (e) => {
+        e.target.checked ? done.add(t.id) : done.delete(t.id);
+        row.classList.toggle("done", e.target.checked);
+        store.set("buddy.done", [...done]); progress();
+      };
+      row.querySelector(".linkish").onclick = () => ask(t.ask);
+      body.append(row);
+    }
+  }
+  progress();
+}
+function progress() {
+  const ids = [...document.querySelectorAll(".task input:checked")].length;
+  const pct = total ? Math.round((ids / total) * 100) : 0;
+  $("#pfill").style.width = pct + "%";
+  $("#pbar").setAttribute("aria-valuenow", pct);
+  $("#plabel").textContent = `${ids} of ${total} done`;
+}
+
+// ---------- chat ----------
+function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+function inline(s) { return s.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>"); }
+function md(text) {
+  let html = "", list = false;
+  for (const line of esc(text).split("\n")) {
+    const m = line.match(/^\s*[-*•]\s+(.*)/);
+    if (m) { if (!list) { html += "<ul>"; list = true; } html += `<li>${inline(m[1])}</li>`; }
+    else { if (list) { html += "</ul>"; list = false; } if (line.trim()) html += `<p>${inline(line)}</p>`; }
+  }
+  return html + (list ? "</ul>" : "");
+}
+
+function addUser(text) {
+  const d = document.createElement("div"); d.className = "me"; d.textContent = text;
+  $("#thread").append(d); scroll();
+}
+function addBuddy(res, question) {
+  const d = document.createElement("div");
+  d.className = "slip" + (res.confidence === "none" ? " none" : "");
+  let meta = "";
+  if (res.sources.length) {
+    const n = { high: 3, medium: 2, low: 1 }[res.confidence];
+    const label = { high: "Strong match", medium: "Partial match", low: "Weak match" }[res.confidence];
+    meta = `<div class="meta"><div class="match"><span class="pips ${res.confidence === "low" ? "weak" : ""}" aria-hidden="true">${[1,2,3].map(i => `<i class="${i <= n ? "on" : ""}"></i>`).join("")}</span><span>${label}</span></div>
+      <ul class="srcs">${res.sources.map(s => `<li>${esc(s.title)}, ${esc(s.source)}<span class="badge ${s.verified ? "ok" : "check"}">${s.verified ? "Verified" : "Needs check"}</span></li>`).join("")}</ul></div>`;
+  }
+  d.innerHTML = md(res.answer) + meta + `<div class="fb"><button data-v="1">Helpful</button><button data-v="0">Not right</button></div>`;
+  d.querySelectorAll(".fb button").forEach((b) => (b.onclick = async () => {
+    const box = d.querySelector(".fb");
+    box.textContent = b.dataset.v === "1" ? "Thanks." : "Thanks. Seniors will review this question.";
+    fetch("/api/feedback", { method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ question, helpful: b.dataset.v === "1" }) }).catch(() => {});
+  }));
+  $("#thread").append(d); scroll();
+}
+function scroll() { const l = $("#log"); l.scrollTop = l.scrollHeight; window.scrollTo(0, document.body.scrollHeight); }
+
+async function ask(question) {
+  question = question.trim();
+  if (!question || busy) return;
+  busy = true; $("#send").disabled = true;
+  $("#hero")?.remove();
+  addUser(question);
+  const typing = document.createElement("div"); typing.className = "typing"; typing.textContent = "Checking the notes…";
+  $("#thread").append(typing); scroll();
+  try {
+    const r = await fetch("/api/ask", {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        question,
+        lang,
+        profile: Object.fromEntries(Object.entries(profile).filter(([, v]) => v)),
+        history: history.slice(-6),
+      }),
+    });
+    typing.remove();
+    if (!r.ok) {
+      const msg = r.status === 429 ? "You're asking quickly. Wait a minute and try again." : "Something went wrong on the server. Try again in a moment.";
+      addBuddy({ answer: msg, confidence: "none", sources: [] }, question);
+    } else {
+      const res = await r.json();
+      addBuddy(res, question);
+      history.push({ role: "user", content: question }, { role: "assistant", content: res.answer.slice(0, 600) });
+    }
+  } catch {
+    typing.remove();
+    addBuddy({ answer: "Can't reach the server. Check your connection and try again.", confidence: "none", sources: [] }, question);
+  }
+  busy = false; $("#send").disabled = false; $("#q").focus();
+}
+
+const q = $("#q");
+q.addEventListener("input", () => { q.style.height = "auto"; q.style.height = Math.min(q.scrollHeight, 140) + "px"; });
+q.addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); $("#form").requestSubmit(); } });
+$("#form").addEventListener("submit", (e) => { e.preventDefault(); const t = q.value; q.value = ""; q.style.height = "auto"; ask(t); });
+
+renderChips();
+loadRoadmap();
+</script>
+</body>
+</html>

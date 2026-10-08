@@ -1,0 +1,7 @@
+.git
+.env
+runtime
+__pycache__
+*.pyc
+tests
+k8s

@@ -1,0 +1,20 @@
+[
+  { "id": "r1", "phase": "Before you arrive", "title": "Pack documents and essentials", "detail": "Originals plus photocopies, passport photos, bedding, a lock, an extension board.", "ask": "What should I pack for hostel?" },
+  { "id": "r2", "phase": "Before you arrive", "title": "Open a bank account and set up UPI", "detail": "So money can reach you without a trip to the bank.", "ask": "How do banking and UPI work on campus?" },
+  { "id": "r3", "phase": "Before you arrive", "title": "Plan your route to campus", "detail": "Decide your train or bus and who picks you up from the city.", "ask": "How do I reach campus from Vijayawada?" },
+
+  { "id": "r4", "phase": "Day 1 and 2", "title": "Collect your hostel room key", "detail": "Take admission documents and your ID to the hostel office.", "ask": "How does hostel allotment work?", "hostel": ["boys", "girls"] },
+  { "id": "r5", "phase": "Day 1 and 2", "title": "Read your hostel's in-time and out-time rules", "detail": "The notice board in your block has the current timings.", "ask": "What are the hostel rules and timings?", "hostel": ["boys", "girls"] },
+  { "id": "r6", "phase": "Day 1 and 2", "title": "Get your ID card", "detail": "You need it for entry, library, hostel and exams.", "ask": "How do I get my ID card?" },
+  { "id": "r7", "phase": "Day 1 and 2", "title": "Log in to VTOP", "detail": "Check your timetable, attendance and fee receipts.", "ask": "How do I log in to VTOP?" },
+  { "id": "r8", "phase": "Day 1 and 2", "title": "Register your devices on campus Wi-Fi", "detail": "The number of devices is limited, so choose wisely.", "ask": "How do I connect to the campus Wi-Fi?" },
+  { "id": "r9", "phase": "Day 1 and 2", "title": "Choose your mess option", "detail": "Veg or non-veg, decided at registration.", "ask": "How does the mess work?", "hostel": ["boys", "girls"] },
+
+  { "id": "r10", "phase": "First week", "title": "Understand FFCS before registration opens", "detail": "Shortlist courses, faculty and backup slots.", "ask": "How does FFCS registration work?" },
+  { "id": "r11", "phase": "First week", "title": "Save the anti-ragging contacts", "detail": "Know who to call before you ever need to.", "ask": "Who do I contact about ragging?" },
+  { "id": "r12", "phase": "First week", "title": "Find the medical centre and library", "detail": "Walk there once so you know the way in an emergency.", "ask": "Where is the medical centre?" },
+
+  { "id": "r13", "phase": "First month", "title": "Check your attendance every week", "detail": "Do not wait for the end of the semester.", "ask": "What is the attendance requirement?" },
+  { "id": "r14", "phase": "First month", "title": "Join one or two clubs", "detail": "Recruitment drives happen early in the semester.", "ask": "How do I join clubs?" },
+  { "id": "r15", "phase": "First month", "title": "Learn the CAT and FAT exam pattern", "detail": "Mark the dates from the academic calendar.", "ask": "How do CAT and FAT exams work?" }
+]

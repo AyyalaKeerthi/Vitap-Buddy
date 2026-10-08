@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VIT-AP Buddy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#cfe3fb; --mint:#d3f0e2; --lav:#e1daf6; --peach:#fde0d1; --butter:#fbf0c2; --rose:#f9d5dc;
+    --bg:#f5f8fd; --card:#ffffff; --ink:#2a3552; --muted:#65708c; --line:#d3dcee; --edge:#a9b8d8;
+    --head:"Source Serif 4",Georgia,"Times New Roman",serif;
+    --body:"Source Sans 3",system-ui,"Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;font-family:var(--body);color:var(--ink);background:var(--lav);display:flex;justify-content:center;align-items:center}
+  /* ---------- moving background: shifting pastel sky + rising campus icons ---------- */
+  .bg{position:fixed;inset:0;overflow:hidden;z-index:0;
+    background:linear-gradient(120deg,#cfe3fb,#e1daf6,#f9d5dc,#fde0d1,#fbf0c2,#d3f0e2,#cfe3fb);
+    background-size:400% 400%;animation:sky 16s ease-in-out infinite alternate}
+  @keyframes sky{from{background-position:0% 50%}to{background-position:100% 50%}}
+  .bg .f{position:absolute;bottom:-90px;left:var(--x);width:var(--s);height:var(--s);display:grid;place-items:center;
+    font-size:calc(var(--s)*.55);border-radius:50%;background:rgba(255,255,255,.55);
+    animation:rise var(--d) linear var(--delay) infinite;will-change:transform}
+  @keyframes rise{
+    0%{transform:translate(0,0) rotate(0deg)}
+    25%{transform:translate(28px,-30vh) rotate(12deg)}
+    50%{transform:translate(-24px,-62vh) rotate(-10deg)}
+    75%{transform:translate(26px,-94vh) rotate(10deg)}
+    100%{transform:translate(0,-130vh) rotate(0deg)}}
+  @media(prefers-reduced-motion:reduce){.bg,.bg .f{animation:none}.bg .f{bottom:auto;top:calc(var(--x)*.8)}}
+
+  .app{
+    position:relative;z-index:1;
+    width:100%;max-width:960px;height:calc(100dvh - 32px);margin:16px;
+    display:flex;flex-direction:column;background:rgba(245,248,253,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border-radius:10px;overflow:hidden;box-shadow:0 10px 30px rgba(80,90,140,.18);
+  }
+  @media(max-width:700px){.app{height:100dvh;margin:0;border-radius:0;box-shadow:none}}
+
+  /* ---------- header ---------- */
+  header{background:var(--blue);padding:18px 22px 16px}
+  .brand{display:flex;align-items:center;gap:14px}
+  .logo{width:48px;height:48px;border:2px solid var(--ink);border-radius:8px;display:grid;place-items:center;font-size:25px;flex:none;background:var(--butter)}
+  header h1{margin:0;font-family:var(--head);font-weight:700;font-size:26px;line-height:1.1}
+  header p{margin:10px 0 0;font-size:15px;line-height:1.5;max-width:36em;color:#3a4766}
+  .stripe{display:flex;height:8px}
+  .stripe i{flex:1}
+  .stripe i:nth-child(1){background:var(--rose)}
+  .stripe i:nth-child(2){background:var(--peach)}
+  .stripe i:nth-child(3){background:var(--butter)}
+  .stripe i:nth-child(4){background:var(--mint)}
+  .stripe i:nth-child(5){background:var(--lav)}
+
+  /* ---------- profile ---------- */
+  .profile{padding:14px 20px 6px;background:rgba(255,255,255,.75);border-bottom:1px solid var(--line)}
+  .profile .label{font-size:14px;font-weight:600;color:var(--muted);margin-bottom:8px}
+  .pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+  .pill{font:inherit;font-size:14px;font-weight:600;border:1.5px solid var(--edge);background:var(--card);color:var(--ink);border-radius:8px;padding:7px 14px;cursor:pointer;transition:background .15s,border-color .15s}
+  .pill:hover{background:var(--bg);border-color:var(--ink)}
+  .pill[aria-pressed="true"]{background:var(--mint);border-color:var(--ink)}
+
+  /* ---------- chat ---------- */
+  #chat{flex:1;overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:14px}
+  .row{display:flex;gap:10px;align-items:flex-start;max-width:88%}
+  .row.user{align-self:flex-end;flex-direction:row-reverse}
+  .avatar{width:34px;height:34px;border-radius:8px;background:var(--lav);display:grid;place-items:center;font-size:17px;flex:none}
+  .msg{padding:12px 16px;border-radius:10px;line-height:1.55;white-space:pre-wrap;font-size:16px;overflow-wrap:anywhere}
+  .user .msg{background:var(--blue);border-bottom-right-radius:3px}
+  .bot .msg{background:var(--card);border:1.5px solid var(--line);border-bottom-left-radius:3px}
+  .bot .msg.gap{background:var(--butter);border-color:#ead98a}
+  .meta{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:13.5px;color:var(--muted);white-space:normal}
+  .bar{height:7px;background:var(--line);border-radius:4px;overflow:hidden;margin:5px 0 6px;width:150px}
+  .bar i{display:block;height:100%}
+
+  /* ---------- chips ---------- */
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .msg .chips{margin-top:12px}
+  .chip{font:inherit;font-size:14.5px;font-weight:600;border:1.5px solid transparent;border-radius:8px;padding:8px 13px;cursor:pointer;color:var(--ink);background:var(--c,var(--blue));transition:border-color .15s}
+  .chip:hover{border-color:var(--ink)}
+  .chip[data-c="0"]{--c:var(--blue)}
+  .chip[data-c="1"]{--c:var(--peach)}
+  .chip[data-c="2"]{--c:var(--mint)}
+  .chip[data-c="3"]{--c:var(--rose)}
+  .chip[data-c="4"]{--c:var(--lav)}
+  .start{padding:0 20px 12px}
+
+  /* ---------- input ---------- */
+  form{display:flex;gap:8px;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));background:rgba(255,255,255,.8);border-top:1px solid var(--line)}
+  input{flex:1;min-width:0;padding:12px 14px;border-radius:8px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;font-size:16px}
+  input::placeholder{color:var(--muted)}
+  input:focus{border-color:var(--ink);outline:none}
+  .mic{border:1.5px solid var(--line);background:var(--bg);border-radius:8px;padding:0 13px;cursor:pointer;font-size:19px}
+  button.send{padding:0 24px;border:1.5px solid var(--ink);border-radius:8px;background:var(--peach);color:var(--ink);font:inherit;font-weight:700;font-size:16px;cursor:pointer}
+  button.send:hover{background:var(--butter)}
+
+  :focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+  @media(max-width:480px){header h1{font-size:22px}.row{max-width:96%}}
+</style>
+</head>
+<body>
+<div class="bg" id="bg" aria-hidden="true"></div>
+<div class="app">
+  <header>
+    <div class="brand">
+      <div class="logo" aria-hidden="true">🎓</div>
+      <h1>VIT-AP Buddy</h1>
+    </div>
+    <p>Your buddy for campus life.</p>
+  </header>
+  <div class="stripe" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+
+  <div class="profile">
+    <div class="label">Where do you stay? Answers get personalised.</div>
+    <div class="pills" id="pills">
+      <button type="button" class="pill" data-v="" aria-pressed="true">Not sure yet</button>
+      <button type="button" class="pill" data-v="boys hostel" aria-pressed="false">Boys hostel</button>
+      <button type="button" class="pill" data-v="girls hostel" aria-pressed="false">Girls hostel</button>
+      <button type="button" class="pill" data-v="day scholar" aria-pressed="false">Day scholar</button>
+    </div>
+  </div>
+
+  <div id="chat" aria-live="polite"></div>
+  <div class="start chips" id="starters"></div>
+
+  <form id="f">
+    <button type="button" class="mic" id="mic" title="Speak" aria-label="Speak your question">🎤</button>
+    <input id="q" placeholder="e.g. How do I check my attendance?" autocomplete="off" aria-label="Your question">
+    <button class="send">Ask</button>
+  </form>
+</div>
+
+<script>
+const chat=document.getElementById('chat'),q=document.getElementById('q');
+let profileVal='';
+let colorN=0;
+
+document.getElementById('pills').onclick=e=>{
+  const b=e.target.closest('.pill'); if(!b)return;
+  profileVal=b.dataset.v;
+  document.querySelectorAll('.pill').forEach(p=>p.setAttribute('aria-pressed',p===b));
+};
+
+const starters=[
+  ["🍽️","What's for lunch today?"],
+  ["📱","What is VTOP?"],
+  ["🏠","Hostel check-in and documents"],
+  ["📶","Wi-Fi and internet"],
+  ["✅","Attendance requirement"],
+  ["🎭","Clubs and chapters"],
+  ["💳","How to pay fees"]
+];
+const sEl=document.getElementById('starters');
+starters.forEach(([emoji,text])=>sEl.append(chip(text,emoji+' '+text)));
+
+function chip(text,label){
+  const b=document.createElement('button');
+  b.className='chip';b.type='button';b.dataset.c=(colorN++)%5;
+  b.textContent=label||text;b.onclick=()=>ask(text);return b;
+}
+
+function add(cls,text){
+  const row=document.createElement('div');row.className='row '+cls;
+  if(cls==='bot'){const a=document.createElement('div');a.className='avatar';a.textContent='🤖';a.setAttribute('aria-hidden','true');row.append(a);}
+  const d=document.createElement('div');d.className='msg';d.textContent=text;
+  row.append(d);chat.append(row);chat.scrollTop=chat.scrollHeight;return d;
+}
+
+add('bot',"Hi! 👋 I'm VIT-AP Buddy. I only answer from verified university info, and I'll tell you honestly when I don't know. Pick a topic below or type your question.");
+
+async function ask(text){
+  if(!text.trim())return;
+  sEl.style.display='none';
+  add('user',text);q.value='';
+  const typing=add('bot','Thinking…');
+  try{
+    const r=await fetch('/api/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:text,profile:profileVal})});
+    const d=await r.json();
+    typing.textContent=d.answer;
+    if(d.gap)typing.classList.add('gap');
+    const meta=document.createElement('div');meta.className='meta';
+    const pct=Math.round(d.confidence*100);
+    const color=pct>=70?'#9fd8b8':pct>=40?'#f6dc8b':'#f1a9b5';
+    meta.innerHTML=`Confidence: ${pct}% <div class="bar"><i style="width:${pct}%;background:${color}"></i></div>`+
+      (d.sources.length?'Source: '+d.sources.map(s=>s.source||s.title).join(', '):'')+(d.usedLlm?' · ✨ AI-phrased':'');
+    typing.append(meta);
+    if(d.followUps.length){const c=document.createElement('div');c.className='chips';d.followUps.forEach(f=>c.append(chip(f)));typing.append(c);}
+  }catch(e){typing.textContent='Could not reach the server. Check that the app is still running in your terminal.';}
+  chat.scrollTop=chat.scrollHeight;
+}
+document.getElementById('f').onsubmit=e=>{e.preventDefault();ask(q.value);};
+
+// Voice input (Chrome/Edge)
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+const mic=document.getElementById('mic');
+if(!SR)mic.style.display='none';else mic.onclick=()=>{const r=new SR();r.lang='en-IN';r.onresult=e=>{q.value=e.results[0][0].transcript;ask(q.value);};r.start();};
+
+// Moving background: campus icons floating up
+(function(){
+  const icons=['🎓','📚','✏️','💡','🔬','🎨','⚽','🎵','🧪','💻','📐','🌱'];
+  const bg=document.getElementById('bg');
+  for(let i=0;i<16;i++){
+    const f=document.createElement('div');f.className='f';f.textContent=icons[i%icons.length];
+    f.style.setProperty('--x',(3+(i*6.1)%92)+'%');
+    f.style.setProperty('--s',(38+(i*13)%34)+'px');
+    f.style.setProperty('--d',(12+(i*7)%9)+'s');
+    f.style.setProperty('--delay',(-(i*1.7)%14)+'s');
+    bg.append(f);
+  }
+})();
+</script>
+</body>
+</html>
