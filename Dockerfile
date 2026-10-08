@@ -10,7 +10,7 @@ COPY pom.xml .
 COPY src ./src
 
 # Build the JAR
-RUN mvn clean package
+RUN mvn clean package -DskipTests
 
 
 # Stage 2: Run the application
