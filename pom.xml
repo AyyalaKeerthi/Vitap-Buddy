@@ -1,38 +1,94 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
+
   <groupId>in.vitap</groupId>
   <artifactId>vitap-buddy</artifactId>
   <version>1.0.0</version>
   <packaging>jar</packaging>
+
   <name>VIT-AP Buddy</name>
 
   <properties>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <!-- JUnit version -->
+    <junit.version>5.11.4</junit.version>
+
+    <!-- Selenium version -->
+    <selenium.version>4.27.0</selenium.version>
   </properties>
+
+
+  <!-- Dependencies -->
+  <dependencies>
+
+    <!-- Selenium WebDriver -->
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-java</artifactId>
+      <version>${selenium.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- JUnit 5 -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+
 
   <build>
     <plugins>
+
+      <!-- Maven Exec Plugin -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
         <version>3.1.0</version>
+
         <configuration>
           <mainClass>in.vitap.buddy.App</mainClass>
         </configuration>
       </plugin>
+
+
+      <!-- Maven JAR Plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
         <version>3.3.0</version>
+
         <configuration>
-          <archive><manifest><mainClass>in.vitap.buddy.App</mainClass></manifest></archive>
+          <archive>
+            <manifest>
+              <mainClass>in.vitap.buddy.App</mainClass>
+            </manifest>
+          </archive>
         </configuration>
       </plugin>
+
+
+      <!-- Maven Surefire Plugin for JUnit 5 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.5.2</version>
+      </plugin>
+
     </plugins>
   </build>
+
 </project>
+
